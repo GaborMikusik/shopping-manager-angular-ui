@@ -1,0 +1,40 @@
+<div class="container mt-3">
+    <form [formGroup]="signupFormGroup" #f="ngForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" name="name" formControlName="name" class="form-control" placeholder="{{name}}"
+                id="name" />
+            <app-form-error id="name-error" [control]="signupFormGroup.controls['name']"
+                errorMessage="{{nameErrorMessage}}" />
+        </div>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" name="username" formControlName="username" class="form-control"
+                placeholder="{{username}}" id="username" />
+            <app-form-error id="username-error" [control]="signupFormGroup.controls['username']"
+                errorMessage="{{usernameErrorMessage}}" />
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" name="email" formControlName="email" class="form-control" placeholder="{{email}}"
+                id="email" />
+            <app-form-error id="email-error" [control]="signupFormGroup.controls['email']"
+                errorMessage="{{emailErrorMessage}}" />
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" formControlName="password" class="form-control"
+                placeholder="{{password}}" id="password" />
+            <app-form-error id="password-error" [control]="signupFormGroup.controls['password']"
+                errorMessage="{{passwordErrorMessage}}" />
+        </div>
+        <div class="form-group">
+            <label for="confirmpassword">Confirm password</label>
+            <input type="password" name="confirmpassword" formControlName="confirmPassword" class="form-control"
+                placeholder="{{password}}" id="password" />
+            <app-form-error id="confirmpassword-error" [control]="signupFormGroup.controls['confirmPassword']"
+                errorMessage="{{passwordErrorMessage}}" />
+        </div>
+        <button type="submit" [disabled]="f.invalid" class="btn btn-primary float-right" id="signup">Signup</button>
+    </form>
+</div>
