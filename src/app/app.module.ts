@@ -6,12 +6,15 @@ import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { FormErrorComponent } from './form-error/form-error.component';
+import { SignInComponent } from './sign-in/sign-in.component';
+import { FormValidationService } from './service/form-validation.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     SignUpComponent,
-    FormErrorComponent
+    FormErrorComponent,
+    SignInComponent
   ],
   imports: [
     BrowserModule,
@@ -19,7 +22,7 @@ import { FormErrorComponent } from './form-error/form-error.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [FormValidationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

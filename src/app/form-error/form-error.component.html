@@ -1,8 +1,8 @@
 <div *ngIf="control.invalid && (control.dirty || control.touched)" class=".ng-invalid">
-  <div *ngIf="control.errors?.['required']" class="error-message">
+  <div *ngIf="control.errors?.['required']" class="error-message" id="required-error-message">
     {{ errorMessage }}
   </div>
-  <div *ngIf="control.errors?.['email']" class="error-message">
+  <div *ngIf="control.errors?.['email']" class="error-message" id="email-error-message">
     {{ errorMessage }}
   </div>
 </div>
