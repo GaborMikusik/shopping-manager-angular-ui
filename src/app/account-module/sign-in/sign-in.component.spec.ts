@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SignInComponent } from './sign-in.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormErrorComponent } from '../form-error/form-error.component';
-import { FormValidationService } from '../service/form-validation.service';
+import { FormValidationService } from '../../service/form-validation.service';
 
 describe('SignInComponent', () => {
   let component: SignInComponent;
