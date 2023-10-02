@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormValidationService } from '../../service/form-validation.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
@@ -18,7 +19,11 @@ export class SignInComponent implements OnInit {
 
   signinFormGroup: FormGroup;
 
-  constructor(private fb: FormBuilder, private formValidationService: FormValidationService) {
+  constructor(
+    private fb: FormBuilder,
+    private formValidationService: FormValidationService,
+    private router: Router
+  ) {
     this.signinFormGroup = this.fb.group({
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -35,6 +40,10 @@ export class SignInComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.signinFormGroup.controls);
+    this.router.navigate(['/management']);
+  }
+
+  onSignUp() {
+    this.router.navigate(['/account/signup']);
   }
 }

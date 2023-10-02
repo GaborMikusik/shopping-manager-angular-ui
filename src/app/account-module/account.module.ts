@@ -7,8 +7,6 @@ import { AccountRoutingModule } from './account-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormValidationService } from '../service/form-validation.service';
 
-
-
 @NgModule({
   declarations: [
     SignUpComponent,

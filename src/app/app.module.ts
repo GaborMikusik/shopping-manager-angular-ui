@@ -14,7 +14,7 @@ import { FormValidationService } from './service/form-validation.service';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [FormValidationService],
   bootstrap: [AppComponent]

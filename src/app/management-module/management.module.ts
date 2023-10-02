@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ManagementComponent } from './management/management.component';
-
+import { ManagementRoutingModule } from './management-routing.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -9,7 +10,10 @@ import { ManagementComponent } from './management/management.component';
     ManagementComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ManagementRoutingModule,
   ]
 })
 export class ManagementModule { }

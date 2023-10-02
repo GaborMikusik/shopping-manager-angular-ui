@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -19,7 +20,7 @@ export class SignUpComponent {
 
   signupFormGroup: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private router: Router) {
     this.signupFormGroup = this.fb.group({
       name: ["", Validators.required],
       username: ["", Validators.required],
@@ -31,5 +32,10 @@ export class SignUpComponent {
 
   onSubmit() {
     console.log(this.signupFormGroup.value)
+    this.router.navigate(['/account/signin']);
+  }
+
+  onCancel() {
+    this.router.navigate(['/account/signin']);
   }
 }

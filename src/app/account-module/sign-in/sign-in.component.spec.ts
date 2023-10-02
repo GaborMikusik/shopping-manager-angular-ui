@@ -4,14 +4,18 @@ import { SignInComponent } from './sign-in.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormErrorComponent } from '../form-error/form-error.component';
 import { FormValidationService } from '../../service/form-validation.service';
+import { By } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 describe('SignInComponent', () => {
   let component: SignInComponent;
   let fixture: ComponentFixture<SignInComponent>;
   let mockFormValidationService: jasmine.SpyObj<FormValidationService>
+  let mockRouter: jasmine.SpyObj<Router>;
 
   beforeEach(() => {
     const formValidationSerivceSpy = jasmine.createSpyObj('FormValidationService', ['isFormInvalid', 'setSignInFormGroup']);
+    const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
     TestBed.configureTestingModule({
       declarations: [
@@ -25,11 +29,14 @@ describe('SignInComponent', () => {
       ],
       providers: [
         { provide: FormValidationService, useValue: formValidationSerivceSpy },
+        { provide: Router, useValue: routerSpy },
       ]
     });
     fixture = TestBed.createComponent(SignInComponent);
     component = fixture.componentInstance;
     mockFormValidationService = TestBed.inject(FormValidationService) as jasmine.SpyObj<FormValidationService>;
+    mockRouter = TestBed.inject(Router) as jasmine.SpyObj<Router>;
+
     fixture.detectChanges();
   });
 
@@ -90,4 +97,28 @@ describe('SignInComponent', () => {
     const submitButton = fixture.nativeElement.querySelector('button[type="submit"]');
     expect(submitButton.disabled).toBe(false);
   });
+
+  it('should navigate to signup page on signup', () => {
+    const signUpButton = fixture.debugElement.query(By.css('#signup'));
+    expect(signUpButton).toBeTruthy();
+
+    signUpButton.triggerEventHandler('click');
+
+    fixture.detectChanges();
+
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/account/signup'])
+  })
+
+  it('should navigate to management page on signin', () => {
+    const form = fixture.debugElement.query(By.css('form'));
+    expect(form).toBeTruthy();
+
+    mockFormValidationService.isFormInvalid.and.returnValue(false);
+
+    form.triggerEventHandler('submit');
+
+    fixture.detectChanges(); 
+
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/management']);
+  })
 });

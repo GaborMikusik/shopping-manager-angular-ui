@@ -4,22 +4,29 @@ import { SignUpComponent } from './sign-up.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule, By } from '@angular/platform-browser';
 import { FormErrorComponent } from '../form-error/form-error.component';
+import { Router } from '@angular/router';
 
 describe('SignUpComponent', () => {
   let component: SignUpComponent;
   let fixture: ComponentFixture<SignUpComponent>;
+  let mockRouter: jasmine.SpyObj<Router>;
 
   beforeEach(() => {
+    const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+
     TestBed.configureTestingModule({
       imports: [
         BrowserModule,
         FormsModule,
         ReactiveFormsModule
       ],
-      declarations: [SignUpComponent, FormErrorComponent]
+      declarations: [SignUpComponent, FormErrorComponent],
+      providers: [{ provide: Router, useValue: routerSpy },]
     });
     fixture = TestBed.createComponent(SignUpComponent);
     component = fixture.componentInstance;
+    mockRouter = TestBed.inject(Router) as jasmine.SpyObj<Router>;
+
     fixture.detectChanges();
   });
 
@@ -71,11 +78,39 @@ describe('SignUpComponent', () => {
     fixture.detectChanges();
 
     expect(signupbutton.disabled).toBeTruthy();
-    
+
     expect(nameError.textContent).toMatch(component.nameErrorMessage)
     expect(usernameError.textContent).toMatch(component.usernameErrorMessage)
     expect(emailError.textContent).toMatch(component.emailErrorMessage)
     expect(passwordError.textContent).toMatch(component.passwordErrorMessage)
     expect(confimpasswordError.textContent).toMatch(component.passwordErrorMessage)
+  })
+
+  it('should navigate to signin page on cancel', () => {
+    const signUpButton = fixture.debugElement.query(By.css('#cancel'));
+    expect(signUpButton).toBeTruthy();
+
+    signUpButton.triggerEventHandler('click');
+
+    fixture.detectChanges();
+
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/account/signin'])
+  })
+
+  it('should navigate to signin page on signup', () => {
+    component.signupFormGroup.controls['name'].setValue('testname');
+    component.signupFormGroup.controls['username'].setValue('testuser');
+    component.signupFormGroup.controls['email'].setValue('test@example.com');
+    component.signupFormGroup.controls['password'].setValue('testpassword');
+    component.signupFormGroup.controls['confirmPassword'].setValue('testpassword');
+
+    const form = fixture.debugElement.query(By.css('form'));
+    expect(form).toBeTruthy();
+
+    form.triggerEventHandler('submit');
+
+    fixture.detectChanges();
+
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/account/signin']);
   })
 });

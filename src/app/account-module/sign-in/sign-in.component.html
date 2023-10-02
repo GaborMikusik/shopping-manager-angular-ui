@@ -21,6 +21,10 @@
             <app-form-error *ngIf="isFormInvalid()" id="password-error" [control]="signinFormGroup.controls['password']"
                 errorMessage="{{passwordErrorMessage}}" />
         </div>
-        <button type="submit" [disabled]="isFormInvalid()" class="btn btn-primary float-right" id="signup">Signup</button>
+        <div class="button-container">
+            <button type="submit" [disabled]="isFormInvalid()" class="btn btn-primary float-right"
+                id="signin">SignIn</button>
+            <button type="button" (click)="onSignUp()" class="btn btn-primary float-right" id="signup">SignUp</button>
+        </div>
     </form>
 </div>

@@ -35,6 +35,10 @@
             <app-form-error id="confirmpassword-error" [control]="signupFormGroup.controls['confirmPassword']"
                 errorMessage="{{passwordErrorMessage}}" />
         </div>
-        <button type="submit" [disabled]="f.invalid" class="btn btn-primary float-right" id="signup">Signup</button>
+        <div class="button-container">
+            <button type="submit" [disabled]="f.invalid" class="btn btn-primary float-right" id="signup">
+                SignUp</button>
+            <button type="button" (click)="onCancel()" class="btn btn-primary float-right" id="cancel">Cancel</button>
+        </div>
     </form>
 </div>
