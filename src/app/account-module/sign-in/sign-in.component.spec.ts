@@ -6,16 +6,20 @@ import { FormErrorComponent } from '../form-error/form-error.component';
 import { FormValidationService } from '../../service/form-validation.service';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/service/auth/auth.service';
+import { of } from 'rxjs';
 
 describe('SignInComponent', () => {
   let component: SignInComponent;
   let fixture: ComponentFixture<SignInComponent>;
   let mockFormValidationService: jasmine.SpyObj<FormValidationService>
   let mockRouter: jasmine.SpyObj<Router>;
+  let mockAuthService: jasmine.SpyObj<AuthService>;
 
   beforeEach(() => {
     const formValidationSerivceSpy = jasmine.createSpyObj('FormValidationService', ['isFormInvalid', 'setSignInFormGroup']);
     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+    const authServiceSpy = jasmine.createSpyObj('AuthService', ['authenticateUser']);
 
     TestBed.configureTestingModule({
       declarations: [
@@ -30,12 +34,14 @@ describe('SignInComponent', () => {
       providers: [
         { provide: FormValidationService, useValue: formValidationSerivceSpy },
         { provide: Router, useValue: routerSpy },
+        { provide: AuthService, useValue: authServiceSpy },
       ]
     });
     fixture = TestBed.createComponent(SignInComponent);
     component = fixture.componentInstance;
     mockFormValidationService = TestBed.inject(FormValidationService) as jasmine.SpyObj<FormValidationService>;
     mockRouter = TestBed.inject(Router) as jasmine.SpyObj<Router>;
+    mockAuthService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
 
     fixture.detectChanges();
   });
@@ -114,10 +120,11 @@ describe('SignInComponent', () => {
     expect(form).toBeTruthy();
 
     mockFormValidationService.isFormInvalid.and.returnValue(false);
+    mockAuthService.authenticateUser.and.returnValue(of(true));
 
     form.triggerEventHandler('submit');
 
-    fixture.detectChanges(); 
+    fixture.detectChanges();
 
     expect(mockRouter.navigate).toHaveBeenCalledWith(['/management']);
   })
