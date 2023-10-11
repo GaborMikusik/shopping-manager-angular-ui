@@ -5,27 +5,38 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule, By } from '@angular/platform-browser';
 import { FormErrorComponent } from '../form-error/form-error.component';
 import { Router } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { AuthApiService } from 'src/app/api/auth-api.service';
+import { SignUpResponse } from 'src/app/api/model/sign-up-response';
+import { of } from 'rxjs';
 
 describe('SignUpComponent', () => {
   let component: SignUpComponent;
   let fixture: ComponentFixture<SignUpComponent>;
   let mockRouter: jasmine.SpyObj<Router>;
+  let mockAuthApiService: jasmine.SpyObj<AuthApiService>;
 
   beforeEach(() => {
     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+    const authApiServiceSpy = jasmine.createSpyObj('AuthApiService', ['signUp']);
 
     TestBed.configureTestingModule({
       imports: [
         BrowserModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        HttpClientModule,
       ],
       declarations: [SignUpComponent, FormErrorComponent],
-      providers: [{ provide: Router, useValue: routerSpy },]
+      providers: [
+        { provide: Router, useValue: routerSpy },
+        { provide: AuthApiService, useValue: authApiServiceSpy },
+      ]
     });
     fixture = TestBed.createComponent(SignUpComponent);
     component = fixture.componentInstance;
     mockRouter = TestBed.inject(Router) as jasmine.SpyObj<Router>;
+    mockAuthApiService = TestBed.inject(AuthApiService) as jasmine.SpyObj<AuthApiService>;
 
     fixture.detectChanges();
   });
@@ -107,6 +118,13 @@ describe('SignUpComponent', () => {
     const form = fixture.debugElement.query(By.css('form'));
     expect(form).toBeTruthy();
 
+    const signUpResponse: SignUpResponse = {
+      success: true,
+      message: 'test message'
+    }
+
+    mockAuthApiService.signUp.and.returnValue(of(signUpResponse));
+    
     form.triggerEventHandler('submit');
 
     fixture.detectChanges();
