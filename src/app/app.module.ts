@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormValidationService } from './service/form-validation.service';
 import { AuthService } from './service/auth/auth.service';
+import { HttpClientModule } from '@angular/common/http';
+import { AuthApiService } from './api/auth-api.service';
 
 @NgModule({
   declarations: [
@@ -16,10 +18,12 @@ import { AuthService } from './service/auth/auth.service';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [
     FormValidationService,
     AuthService,
+    AuthApiService
   ],
   bootstrap: [AppComponent]
 })
