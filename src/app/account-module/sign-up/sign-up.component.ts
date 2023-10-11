@@ -13,10 +13,10 @@ import { AppRoutes } from '../app-routes';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent {
-  name: string = 'Name...'
-  username: string = 'Username...'
-  email: string = 'email@email.com'
-  password: string = 'Password...'
+  name: string = ''
+  username: string = ''
+  email: string = ''
+  password: string = ''
 
   nameErrorMessage = ValidationMessages.nameRequired
   usernameErrorMessage = ValidationMessages.usernameRequired
@@ -36,7 +36,6 @@ export class SignUpComponent {
   }
 
   onSubmit() {
-    console.log(this.signupFormGroup.value)
     const request: SignUpRequest = {
       name: this.name,
       username: this.username,
