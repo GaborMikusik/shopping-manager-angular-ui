@@ -2,7 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormValidationService } from '../../service/form-validation.service';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/service/auth/auth.service';
+import { AuthApiService } from 'src/app/api/auth-api.service';
+import { SignInRequest } from 'src/app/api/model/sign-in-request';
+import { SignInResponse } from 'src/app/api/model/sign-in-response';
+import { ValidationMessages } from '../validation-messages';
+import { AppRoutes } from '../app-routes';
 
 @Component({
   selector: 'app-sign-in',
@@ -14,16 +18,16 @@ export class SignInComponent implements OnInit {
   email: string = '';
   password: string = '';
 
-  usernameErrorMessage = 'Username is required.';
-  emailErrorMessage = 'Invalid email format.';
-  passwordErrorMessage = 'Password is required.';
+  usernameErrorMessage = ValidationMessages.usernameRequired;
+  emailErrorMessage = ValidationMessages.emailInvalid;
+  passwordErrorMessage = ValidationMessages.passwordRequired;
 
   signinFormGroup: FormGroup;
 
   constructor(
     private fb: FormBuilder,
     private formValidationService: FormValidationService,
-    private authService: AuthService,
+    private authApiService: AuthApiService,
     private router: Router
   ) {
     this.signinFormGroup = this.fb.group({
@@ -42,14 +46,37 @@ export class SignInComponent implements OnInit {
   }
 
   onSubmit() {
-    this.authService.authenticateUser(this.username, this.password).subscribe((result: boolean) => {
-      localStorage.setItem('isAuthenticated', result.toString());
-      if (result)
-        this.router.navigate(['/management']);
-    });
+    const usernameOrEmail = this.username === '' ? this.email : this.username;
+    const request: SignInRequest = {
+      usernameOrEmail: usernameOrEmail,
+      password: this.password
+    }
+    this.authApiService.signIn(request).subscribe({
+      next: this.handleSignInSuccess.bind(this),
+      error: this.handleSignInError.bind(this),
+      complete: this.handleSignInComplete.bind(this),
+    })
   }
 
   onSignUp() {
-    this.router.navigate(['/account/signup']);
+    this.router.navigate([AppRoutes.signUp]);
+  }
+
+  private handleSignInSuccess(response: SignInResponse) {
+    const user = {
+      username: this.username,
+      email: this.email,
+      token: response.tokenType + ' ' + response.accessToken
+    }
+    localStorage.setItem('user', JSON.stringify(user));
+    this.router.navigate([AppRoutes.management]);
+  }
+
+  private handleSignInError(error: any) {
+    console.error(error);
+  }
+
+  private handleSignInComplete() {
+    console.log('Request completed');
   }
 }

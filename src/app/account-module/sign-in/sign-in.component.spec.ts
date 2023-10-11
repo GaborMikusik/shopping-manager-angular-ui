@@ -6,20 +6,22 @@ import { FormErrorComponent } from '../form-error/form-error.component';
 import { FormValidationService } from '../../service/form-validation.service';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/service/auth/auth.service';
 import { of } from 'rxjs';
+import { HttpClientModule } from '@angular/common/http';
+import { AuthApiService } from 'src/app/api/auth-api.service';
+import { SignInResponse } from 'src/app/api/model/sign-in-response';
 
 describe('SignInComponent', () => {
   let component: SignInComponent;
   let fixture: ComponentFixture<SignInComponent>;
   let mockFormValidationService: jasmine.SpyObj<FormValidationService>
   let mockRouter: jasmine.SpyObj<Router>;
-  let mockAuthService: jasmine.SpyObj<AuthService>;
+  let mockAuthApiService: jasmine.SpyObj<AuthApiService>;
 
   beforeEach(() => {
     const formValidationSerivceSpy = jasmine.createSpyObj('FormValidationService', ['isFormInvalid', 'setSignInFormGroup']);
     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
-    const authServiceSpy = jasmine.createSpyObj('AuthService', ['authenticateUser']);
+    const authApiServiceSpy = jasmine.createSpyObj('AuthApiService', ['signIn']);
 
     TestBed.configureTestingModule({
       declarations: [
@@ -29,19 +31,19 @@ describe('SignInComponent', () => {
       imports: [
         FormsModule,
         ReactiveFormsModule,
-
+        HttpClientModule,
       ],
       providers: [
         { provide: FormValidationService, useValue: formValidationSerivceSpy },
         { provide: Router, useValue: routerSpy },
-        { provide: AuthService, useValue: authServiceSpy },
+        { provide: AuthApiService, useValue: authApiServiceSpy },
       ]
     });
     fixture = TestBed.createComponent(SignInComponent);
     component = fixture.componentInstance;
     mockFormValidationService = TestBed.inject(FormValidationService) as jasmine.SpyObj<FormValidationService>;
     mockRouter = TestBed.inject(Router) as jasmine.SpyObj<Router>;
-    mockAuthService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
+    mockAuthApiService = TestBed.inject(AuthApiService) as jasmine.SpyObj<AuthApiService>;
 
     fixture.detectChanges();
   });
@@ -120,7 +122,12 @@ describe('SignInComponent', () => {
     expect(form).toBeTruthy();
 
     mockFormValidationService.isFormInvalid.and.returnValue(false);
-    mockAuthService.authenticateUser.and.returnValue(of(true));
+    const response: SignInResponse = {
+      accessToken: 'testAccsessToken',
+      tokenType: 'testTokenType'
+    }
+
+    mockAuthApiService.signIn.and.returnValue(of(response));
 
     form.triggerEventHandler('submit');
 
