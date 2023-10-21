@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthApiService } from 'src/app/api/auth-api.service';
 import { SignUpResponse } from 'src/app/api/model/sign-up-response';
 import { of } from 'rxjs';
+import { MockAlertComponent } from '../sign-in/mock-alert.component';
 
 describe('SignUpComponent', () => {
   let component: SignUpComponent;
@@ -27,7 +28,7 @@ describe('SignUpComponent', () => {
         ReactiveFormsModule,
         HttpClientModule,
       ],
-      declarations: [SignUpComponent, FormErrorComponent],
+      declarations: [SignUpComponent, FormErrorComponent, MockAlertComponent],
       providers: [
         { provide: Router, useValue: routerSpy },
         { provide: AuthApiService, useValue: authApiServiceSpy },
@@ -124,7 +125,7 @@ describe('SignUpComponent', () => {
     }
 
     mockAuthApiService.signUp.and.returnValue(of(signUpResponse));
-    
+
     form.triggerEventHandler('submit');
 
     fixture.detectChanges();

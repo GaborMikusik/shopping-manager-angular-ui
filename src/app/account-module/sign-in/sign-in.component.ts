@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { FormValidationService } from '../../service/form-validation.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthApiService } from 'src/app/api/auth-api.service';
 import { SignInRequest } from 'src/app/api/model/sign-in-request';
 import { SignInResponse } from 'src/app/api/model/sign-in-response';
-import { ValidationMessages } from '../validation-messages';
+import { FormValidationService } from '../../service/form-validation.service';
 import { AppRoutes } from '../app-routes';
+import { ValidationMessages } from '../validation-messages';
+import { AlertService } from 'src/app/error-alert/alert.service';
+import { ErrorDetails } from 'src/app/error-alert/model/error-details';
 
 @Component({
   selector: 'app-sign-in',
@@ -28,6 +30,7 @@ export class SignInComponent implements OnInit {
     private fb: FormBuilder,
     private formValidationService: FormValidationService,
     private authApiService: AuthApiService,
+    private alertService: AlertService,
     private router: Router
   ) {
     this.signinFormGroup = this.fb.group({
@@ -73,7 +76,7 @@ export class SignInComponent implements OnInit {
   }
 
   private handleSignInError(error: any) {
-    console.error(error);
+    this.alertService.error(new ErrorDetails(error.error.message, error.error.status, error.error.errors));
   }
 
   private handleSignInComplete() {

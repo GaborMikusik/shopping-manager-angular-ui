@@ -4,8 +4,10 @@ import { Router } from '@angular/router';
 import { AuthApiService } from 'src/app/api/auth-api.service';
 import { SignUpRequest } from 'src/app/api/model/sign-up-request';
 import { ValidationMessages } from '../validation-messages';
-import { SignUpResponse } from 'src/app/api/model/sign-up-response';
 import { AppRoutes } from '../app-routes';
+import { SignUpResponse } from 'src/app/api/model/sign-up-response';
+import { AlertService } from 'src/app/error-alert/alert.service';
+import { ErrorDetails } from 'src/app/error-alert/model/error-details';
 
 @Component({
   selector: 'app-sign-up',
@@ -25,7 +27,12 @@ export class SignUpComponent {
 
   signupFormGroup: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router, private authApiService: AuthApiService) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private authApiService: AuthApiService,
+    private alertService: AlertService
+  ) {
     this.signupFormGroup = this.fb.group({
       name: ["", Validators.required],
       username: ["", Validators.required],
@@ -59,7 +66,7 @@ export class SignUpComponent {
   }
 
   private handleSignUpError(error: any) {
-    console.error(error);
+    this.alertService.error(new ErrorDetails(error.error.message, error.error.status, error.error.errors))
   }
 
   private handleSignUpComplete() {

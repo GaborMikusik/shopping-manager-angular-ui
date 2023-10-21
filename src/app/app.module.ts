@@ -23,7 +23,7 @@ import { AuthApiService } from './api/auth-api.service';
   providers: [
     FormValidationService,
     AuthService,
-    AuthApiService
+    AuthApiService,
   ],
   bootstrap: [AppComponent]
 })

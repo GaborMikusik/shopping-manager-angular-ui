@@ -10,6 +10,8 @@ import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthApiService } from 'src/app/api/auth-api.service';
 import { SignInResponse } from 'src/app/api/model/sign-in-response';
+import { AlertService } from 'src/app/error-alert/alert.service';
+import { MockAlertComponent } from './mock-alert.component';
 
 describe('SignInComponent', () => {
   let component: SignInComponent;
@@ -22,11 +24,13 @@ describe('SignInComponent', () => {
     const formValidationSerivceSpy = jasmine.createSpyObj('FormValidationService', ['isFormInvalid', 'setSignInFormGroup']);
     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
     const authApiServiceSpy = jasmine.createSpyObj('AuthApiService', ['signIn']);
+    const alertServiceSpy = jasmine.createSpyObj('AlertService', ['error', 'onAlert']);
 
     TestBed.configureTestingModule({
       declarations: [
         SignInComponent,
-        FormErrorComponent
+        FormErrorComponent,
+        MockAlertComponent
       ],
       imports: [
         FormsModule,
@@ -37,6 +41,7 @@ describe('SignInComponent', () => {
         { provide: FormValidationService, useValue: formValidationSerivceSpy },
         { provide: Router, useValue: routerSpy },
         { provide: AuthApiService, useValue: authApiServiceSpy },
+        { provide: AlertService, useValue: alertServiceSpy },
       ]
     });
     fixture = TestBed.createComponent(SignInComponent);

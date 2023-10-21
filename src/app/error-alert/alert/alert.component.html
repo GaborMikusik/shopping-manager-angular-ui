@@ -1,0 +1,8 @@
+<div *ngIf="alert" class="{{cssClass(alert!)}}">
+    <a class="close" (click)="removeAlert()">&times;</a>
+    <span [innerHTML]="alert!.error.getStatus()"></span>
+    <br>
+    <span [innerHTML]="alert!.error.getMessage()"></span>
+    <br>
+    <span [innerHTML]="alert!.error.getErrors()"></span>
+</div>

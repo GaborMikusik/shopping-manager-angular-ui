@@ -6,18 +6,22 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { AccountRoutingModule } from './account-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormValidationService } from '../service/form-validation.service';
+import { AlertService } from '../error-alert/alert.service';
+import { AlertComponent } from '../error-alert/alert/alert.component';
 
 @NgModule({
   declarations: [
     SignUpComponent,
     FormErrorComponent,
-    SignInComponent],
+    SignInComponent,
+    AlertComponent
+  ],
   imports: [
     CommonModule,
     AccountRoutingModule,
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [FormValidationService],
+  providers: [FormValidationService, AlertService],
 })
 export class AccountModule { }
