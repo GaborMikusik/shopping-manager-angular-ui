@@ -1,0 +1,32 @@
+<div class="container mt-3">
+    <form [formGroup]="signinFormGroup" #f="ngForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" name="username" formControlName="username" class="form-control" [(ngModel)]="username"
+          placeholder="Username..." id="username" />
+        <app-form-error id="username-error" [control]="signinFormGroup.controls['username']"
+          errorMessage="{{usernameErrorMessage}}"></app-form-error>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" name="email" formControlName="email" class="form-control" [(ngModel)]="email"
+          placeholder="email@email.com" id="email" />
+        <app-form-error *ngIf="isFormInvalid()" id="email-error" [control]="signinFormGroup.controls['email']"
+          errorMessage="{{emailErrorMessage}}"></app-form-error>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" name="password" formControlName="password" class="form-control"
+          [(ngModel)]="password" placeholder="Password..." id="password" />
+        <app-form-error *ngIf="isFormInvalid()" id="password-error" [control]="signinFormGroup.controls['password']"
+          errorMessage="{{passwordErrorMessage}}"></app-form-error>
+      </div>
+      <div class="button-container">
+        <button type="submit" [disabled]="isFormInvalid()" class="btn btn-primary float-right"
+          id="signin">SignIn</button>
+        <button type="button" (click)="onSignUp()" class="btn btn-primary float-right" id="signup">SignUp</button>
+      </div>
+    </form>
+    <app-alert></app-alert>
+  </div>
+  

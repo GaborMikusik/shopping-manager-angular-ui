@@ -1,0 +1,7 @@
+<app-sign-in-view
+  [usernameErrorMessage]="usernameErrorMessage"
+  [emailErrorMessage]="emailErrorMessage"
+  [passwordErrorMessage]="passwordErrorMessage"
+  (signIn)="onSubmit($event)"
+  (signUp)="onSignUp()"
+></app-sign-in-view>

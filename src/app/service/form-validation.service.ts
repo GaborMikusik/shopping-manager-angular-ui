@@ -30,6 +30,6 @@ export class FormValidationService {
   }
 
   isFormInvalid(): boolean {
-    return !(this.isUsernameValid === 'VALID' && (this.isEmailValid === 'VALID' || this.isPasswordValid === 'VALID'))
+    return !(this.isPasswordValid === 'VALID' && (this.isEmailValid === 'VALID' || this.isUsernameValid === 'VALID'))
   }
 }
