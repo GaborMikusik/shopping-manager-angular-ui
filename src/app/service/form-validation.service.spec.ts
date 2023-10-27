@@ -28,58 +28,58 @@ describe('FormValidationService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should return true if username is valid, email is invalid, and password is invalid', () => {
+  it('should return false if username is valid, email is invalid, and password is invalid', () => {
     setFormGroupValues(signinFormGroup, 'username', 'email', '');
-    const isFormInvalid = service.isFormInvalid();
-    expect(isFormInvalid).toBeTrue();
+    const isFormValid = service.isFormValid();
+    expect(isFormValid).toBeFalse();
   });
 
-  it('should return true if username is invalid, email is valid, and password is invalid', () => {
+  it('should return false if username is invalid, email is valid, and password is invalid', () => {
     setFormGroupValues(signinFormGroup, '', 'email@email', '');
-    const isFormInvalid = service.isFormInvalid();
-    expect(isFormInvalid).toBeTrue();
+    const isFormValid = service.isFormValid();
+    expect(isFormValid).toBeFalse();
   });
 
-  it('should return true if username is invalid, email is invalid, and password is valid', () => {
+  it('should return false if username is invalid, email is invalid, and password is valid', () => {
     setFormGroupValues(signinFormGroup, '', 'email@', 'password');
-    const isFormInvalid = service.isFormInvalid();
-    expect(isFormInvalid).toBeTrue();
+    const isFormValid = service.isFormValid();
+    expect(isFormValid).toBeFalse();
   });
 
-  it('should return false if username is valid, email is valid, and password is valid', () => {
+  it('should return true if username is valid, email is valid, and password is valid', () => {
     setFormGroupValues(signinFormGroup, 'username', 'email@email', 'password');
-    const isFormInvalid = service.isFormInvalid();
-    expect(isFormInvalid).toBeFalse();
+    const isFormValid = service.isFormValid();
+    expect(isFormValid).toBeTrue();
   });
 
   it('should return true if username is valid, email is invalid, and password is valid', () => {
     setFormGroupValues(signinFormGroup, 'username', 'email@', 'password');
-    const isFormInvalid = service.isFormInvalid();
-    expect(isFormInvalid).toBeFalse();
+    const isFormValid = service.isFormValid();
+    expect(isFormValid).toBeTrue();
   });
 
   it('should return true if username is invalid, email is valid, and password is valid', () => {
     setFormGroupValues(signinFormGroup, '', 'email@email', 'password');
-    const isFormInvalid = service.isFormInvalid();
-    expect(isFormInvalid).toBeTrue();
+    const isFormValid = service.isFormValid();
+    expect(isFormValid).toBeTrue();
   });
 
-  it('should return true if username is invalid, email is invalid, and password is invalid', () => {
+  it('should return false if username is invalid, email is invalid, and password is invalid', () => {
     setFormGroupValues(signinFormGroup, '', 'email@', '');
-    const isFormInvalid = service.isFormInvalid();
-    expect(isFormInvalid).toBeTrue();
+    const isFormValid = service.isFormValid();
+    expect(isFormValid).toBeFalse();
   });
 
   it('should return false if username is valid, email is valid, and password is invalid', () => {
     setFormGroupValues(signinFormGroup, 'username', 'email@email', '');
-    const isFormInvalid = service.isFormInvalid();
-    expect(isFormInvalid).toBeFalse();
+    const isFormValid = service.isFormValid();
+    expect(isFormValid).toBeFalse();
   });
 
-  it('should return false if username is valid, email is invalid, and password is valid', () => {
+  it('should return true if username is valid, email is invalid, and password is valid', () => {
     setFormGroupValues(signinFormGroup, 'username', 'email@', 'password');
-    const isFormInvalid = service.isFormInvalid();
-    expect(isFormInvalid).toBeFalse();
+    const isFormValid = service.isFormValid();
+    expect(isFormValid).toBeTrue();
   });
 
   function setFormGroupValues(signinFormGroup: FormGroup, username: string, email: string, password: string) {

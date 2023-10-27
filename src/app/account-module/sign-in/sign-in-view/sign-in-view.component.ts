@@ -5,9 +5,9 @@ import { FormValidationService } from 'src/app/service/form-validation.service';
 
 @Component({
   selector: 'app-sign-in-view',
-  templateUrl: './sign-in.component.html',
+  templateUrl: './sign-in-view.component.html',
 })
-export class SignInComponent {
+export class SignInViewComponent {
   @Input() usernameErrorMessage: string = "";
   @Input() emailErrorMessage: string = "";
   @Input() passwordErrorMessage: string = "";
@@ -29,8 +29,8 @@ export class SignInComponent {
     this.formValidationService.setSignInFormGroup(this.signinFormGroup)
   }
 
-  isFormInvalid(): boolean {
-    return this.formValidationService.isFormInvalid();
+  isFormValid(): boolean {
+    return this.formValidationService.isFormValid();
   }
 
   onSubmit() {

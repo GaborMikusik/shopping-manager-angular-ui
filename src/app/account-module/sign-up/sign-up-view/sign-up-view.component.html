@@ -1,5 +1,5 @@
 <div class="container mt-3">
-    <form [formGroup]="signupFormGroup" #f="ngForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="signupFormGroup" (ngSubmit)="onSubmit()">
         <div class="form-group">
             <label for="name">Name</label>
             <input type="text" name="name" formControlName="name" class="form-control" [(ngModel)]="name"
@@ -36,7 +36,7 @@
                 errorMessage="{{passwordErrorMessage}}" />
         </div>
         <div class="button-container">
-            <button type="submit" [disabled]="f.invalid" class="btn btn-primary float-right" id="signup">
+            <button type="submit" [disabled]="signupFormGroup.invalid" class="btn btn-primary float-right" id="signup">
                 SignUp</button>
             <button type="button" (click)="onCancel()" class="btn btn-primary float-right" id="cancel">Cancel</button>
         </div>

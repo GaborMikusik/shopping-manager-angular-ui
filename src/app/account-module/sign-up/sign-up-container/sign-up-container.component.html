@@ -1,0 +1,8 @@
+<app-sign-up-view 
+    [nameErrorMessage]="nameErrorMessage"
+    [usernameErrorMessage]="usernameErrorMessage"
+    [emailErrorMessage]="emailErrorMessage"
+    [passwordErrorMessage]="passwordErrorMessage"
+    (signUp)="onSubmit($event)"
+    (cancel)="onCancel()"
+></app-sign-up-view>

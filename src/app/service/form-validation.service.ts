@@ -13,7 +13,7 @@ export class FormValidationService {
 
   setSignInFormGroup(signinFormGroup: FormGroup) {
     signinFormGroup.statusChanges.subscribe(() => {
-      this.isFormInvalid()
+      this.isFormValid()
     });
 
     signinFormGroup.get('username')!.statusChanges.subscribe((status: string) => {
@@ -29,7 +29,7 @@ export class FormValidationService {
     })
   }
 
-  isFormInvalid(): boolean {
-    return !(this.isPasswordValid === 'VALID' && (this.isEmailValid === 'VALID' || this.isUsernameValid === 'VALID'))
+  isFormValid(): boolean {
+    return (this.isPasswordValid === 'VALID' && (this.isEmailValid === 'VALID' || this.isUsernameValid === 'VALID'))
   }
 }
