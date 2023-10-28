@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { ValidationMessages } from '../../validation-messages';
+import { ValidationMessages } from '../../../validation-messages';
 import { Router } from '@angular/router';
-import { AuthApiService } from 'src/app/api/auth-api.service';
 import { AlertService } from 'src/app/error-alert/alert.service';
 import { ErrorDetails } from 'src/app/error-alert/model/error-details';
-import { AppRoutes } from '../../app-routes';
+import { AppRoutes } from '../../../app-routes';
 import { SignUpRequest } from 'src/app/api/model/sign-up-request';
+import { SignUpService } from '../../data-access/sign-up.service';
 
 @Component({
   selector: 'app-sign-up-container',
@@ -18,7 +18,7 @@ export class SignUpContainerComponent {
   passwordErrorMessage = ValidationMessages.passwordRequired
 
   constructor(
-    private authApiService: AuthApiService,
+    private signUpService: SignUpService,
     private alertService: AlertService,
     private router: Router) { }
 
@@ -35,7 +35,7 @@ export class SignUpContainerComponent {
   }
 
   onSubmit(signUpRequest: SignUpRequest) {
-    this.authApiService.signUp(signUpRequest).subscribe({
+    this.signUpService.signUp(signUpRequest).subscribe({
       next: this.handleSignUpSuccess.bind(this),
       error: this.handleSignUpError.bind(this),
       complete: this.handleSignUpComplete.bind(this),

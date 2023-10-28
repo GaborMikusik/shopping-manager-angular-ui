@@ -22,7 +22,7 @@
         errorMessage="{{passwordErrorMessage}}"></app-form-error>
     </div>
     <div class="button-container">
-      <button type="submit" [disabled]="isFormValid()" class="btn btn-primary float-right" id="signin">SignIn</button>
+      <button type="submit" [disabled]="!isFormValid()" class="btn btn-primary float-right" id="signin">SignIn</button>
       <button type="button" (click)="onSignUp()" class="btn btn-primary float-right" id="signup">SignUp</button>
     </div>
   </form>

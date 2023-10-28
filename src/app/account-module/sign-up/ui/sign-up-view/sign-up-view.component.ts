@@ -40,7 +40,6 @@ export class SignUpViewComponent {
       password: this.password,
       roles: [{ name: 'ROLE_USER' }]
     };
-    console.log('SIGN UP VIEW: ', request)
     this.signUp.emit(request);
   }
 

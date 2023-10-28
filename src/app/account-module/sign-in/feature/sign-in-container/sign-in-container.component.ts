@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/error-alert/alert.service';
-import { AppRoutes } from '../../app-routes';
-import { AuthApiService } from 'src/app/api/auth-api.service';
+import { AppRoutes } from '../../../app-routes';
 import { SignInRequest } from 'src/app/api/model/sign-in-request';
 import { SignInResponse } from 'src/app/api/model/sign-in-response';
 import { ErrorDetails } from 'src/app/error-alert/model/error-details';
-import { ValidationMessages } from '../../validation-messages';
+import { ValidationMessages } from '../../../validation-messages';
+import { SignInService } from '../../data-access/sign-in.service';
 
 @Component({
   selector: 'app-sign-in-container',
@@ -18,7 +18,7 @@ export class SignInContainerComponent {
   passwordErrorMessage = ValidationMessages.passwordRequired;
 
   constructor(
-    private authApiService: AuthApiService,
+    private signInService: SignInService,
     private alertService: AlertService,
     private router: Router) { }
 
@@ -33,7 +33,7 @@ export class SignInContainerComponent {
   }
 
   onSubmit(signInData: SignInRequest) {
-    this.authApiService.signIn(signInData).subscribe({
+    this.signInService.signIn(signInData).subscribe({
       next: (response: SignInResponse) => {
         this.handleSignInSuccess(signInData.usernameOrEmail, signInData.usernameOrEmail, response.tokenType + ' ' + response.accessToken);
       },

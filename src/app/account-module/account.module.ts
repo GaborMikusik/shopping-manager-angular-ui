@@ -6,10 +6,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormValidationService } from '../service/form-validation.service';
 import { AlertService } from '../error-alert/alert.service';
 import { AlertComponent } from '../error-alert/alert/alert.component';
-import { SignInContainerComponent } from './sign-in/sign-in-container/sign-in-container.component';
-import { SignInViewComponent } from './sign-in/sign-in-view/sign-in-view.component';
-import { SignUpContainerComponent } from './sign-up/sign-up-container/sign-up-container.component';
-import { SignUpViewComponent } from './sign-up/sign-up-view/sign-up-view.component';
+import { SignInContainerComponent } from './sign-in/feature/sign-in-container/sign-in-container.component';
+import { SignInViewComponent } from './sign-in/ui/sign-in-view/sign-in-view.component';
+import { SignUpContainerComponent } from './sign-up/feature/sign-up-container/sign-up-container.component';
+import { SignUpViewComponent } from './sign-up/ui/sign-up-view/sign-up-view.component';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
